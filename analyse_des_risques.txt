@@ -1,0 +1,106 @@
+
+**Fonctionnalité / Processus : Carte interactive**  
+- **Mode de défaillance** : Les événements ne s’affichent pas  
+- **Effet** : Perte de fonctionnalité majeure  
+- **Cause(s)** : Erreur d’intégration API Google Maps  
+- **Gravité (G)** : 10  
+- **Probabilité (P)** : 4  
+- **Détection (D)** : 3  
+- **Criticité (C)** : 120  
+- **Actions correctives / Préventives** : Tester l'intégration dès la première semaine ; avoir un plan B avec OpenStreetMap.
+
+---
+
+**Fonctionnalité / Processus : Affichage des événements filtrés**  
+- **Mode de défaillance** : Les filtres ne fonctionnent pas  
+- **Effet** : Expérience utilisateur dégradée  
+- **Cause(s)** : Mauvaise configuration des requêtes  
+- **Gravité (G)** : 8  
+- **Probabilité (P)** : 5  
+- **Détection (D)** : 4  
+- **Criticité (C)** : 160  
+- **Actions correctives / Préventives** : Tester les filtres avec des cas réels ; valider les résultats en continu pendant le développement.
+
+---
+
+**Fonctionnalité / Processus : Base de données Firebase**  
+- **Mode de défaillance** : Problème de synchronisation des données  
+- **Effet** : Données non mises à jour  
+- **Cause(s)** : Mauvaise configuration Firebase  
+- **Gravité (G)** : 7  
+- **Probabilité (P)** : 3  
+- **Détection (D)** : 4  
+- **Criticité (C)** : 84  
+- **Actions correctives / Préventives** : Vérifier la configuration Firebase ; intégrer des logs pour détecter les erreurs rapidement.
+
+---
+
+**Fonctionnalité / Processus : UI/UX (Interface utilisateur)**  
+- **Mode de défaillance** : Navigation peu intuitive  
+- **Effet** : Abandon des utilisateurs  
+- **Cause(s)** : Design non adapté  
+- **Gravité (G)** : 6  
+- **Probabilité (P)** : 4  
+- **Détection (D)** : 3  
+- **Criticité (C)** : 72  
+- **Actions correctives / Préventives** : Réaliser un prototype rapide pour validation par le client ; intégrer des retours utilisateurs précoces.
+
+---
+
+**Fonctionnalité / Processus : Performances de l'application**  
+- **Mode de défaillance** : Temps de chargement élevé  
+- **Effet** : Frustration des utilisateurs  
+- **Cause(s)** : Images ou données mal optimisées  
+- **Gravité (G)** : 7  
+- **Probabilité (P)** : 4  
+- **Détection (D)** : 3  
+- **Criticité (C)** : 84  
+- **Actions correctives / Préventives** : Optimiser les images et les données dès le développement ; tester sur des appareils d’entrée de gamme.
+
+---
+
+**Fonctionnalité / Processus : Délai de livraison**  
+- **Mode de défaillance** : Retard de livraison  
+- **Effet** : Perte de confiance du client  
+- **Cause(s)** : Dépassement de temps sur certaines tâches  
+- **Gravité (G)** : 9  
+- **Probabilité (P)** : 3  
+- **Détection (D)** : 3  
+- **Criticité (C)** : 81  
+- **Actions correctives / Préventives** : Définir des jalons hebdomadaires clairs ; suivre un planning strict et prioriser les fonctionnalités essentielles.
+
+---
+
+**Fonctionnalité / Processus : Back-office**  
+- **Mode de défaillance** : Problème dans l'ajout manuel des événements  
+- **Effet** : Retard dans les mises à jour  
+- **Cause(s)** : Manque de rigueur dans le suivi  
+- **Gravité (G)** : 5  
+- **Probabilité (P)** : 3  
+- **Détection (D)** : 3  
+- **Criticité (C)** : 45  
+- **Actions correctives / Préventives** : Mettre en place une procédure claire pour l’ajout des événements, avec un système de validation en interne.
+
+---
+
+**Fonctionnalité / Processus : Compatibilité Android**  
+- **Mode de défaillance** : Application non fonctionnelle sur certaines versions  
+- **Effet** : Perte d’utilisateurs  
+- **Cause(s)** : Mauvaise gestion des versions Android  
+- **Gravité (G)** : 8  
+- **Probabilité (P)** : 3  
+- **Détection (D)** : 2  
+- **Criticité (C)** : 48  
+- **Actions correctives / Préventives** : Tester sur plusieurs versions d’Android ; définir une version minimale compatible dès le début du projet.
+
+---
+
+**Fonctionnalité / Processus : Gestion des erreurs**  
+- **Mode de défaillance** : Les erreurs ne sont pas gérées ou affichées à l’écran  
+- **Effet** : Frustration des utilisateurs  
+- **Cause(s)** : Absence de gestion d'exceptions  
+- **Gravité (G)** : 6  
+- **Probabilité (P)** : 4  
+- **Détection (D)** : 4  
+- **Criticité (C)** : 96  
+- **Actions correctives / Préventives** : Implémenter une gestion robuste des erreurs (messages clairs) dès le développement.
