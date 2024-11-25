@@ -3,94 +3,54 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'EventDeaf',
+      title: 'Flutter Map Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 0, 0)),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Projet EventDeaf'),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text('Flutter Map Demo'),
       ),
-      body: Column(
+      body: FlutterMap(
+        options: MapOptions(
+          initialCenter: LatLng(51.5, -0.09), // Latitude, Longitude for the initial view
+          initialZoom: 13.0, // Initial zoom level
+        ),
         children: [
-          // Ajouter la carte OpenStreetMap
-          Expanded(
-            child: FlutterMap(
-              options: MapOptions(
-                center: LatLng(48.8566, 2.3522), // Coordonnées de Paris
-                zoom: 13.0,
-              ),
-              children: [
-                // TileLayer sans TileLayerOptions
-                TileLayer(
-                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
-                ),
-                // MarkerLayer sans MarkerLayerOptions
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      point: LatLng(48.8566, 2.3522), // Coordonnée du marqueur
-                      builder: (ctx) => Icon(Icons.location_on, color: Colors.red, size: 40),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          TileLayer(
+            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // OpenStreetMap tile URL
+            subdomains: ['a', 'b', 'c'], // Optional subdomains for OpenStreetMap
           ),
-          // Affichage du compteur
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('You have pushed the button this many times:'),
-                Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-              ],
-            ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                point: LatLng(51.5, -0.09), // Marker coordinates
+                width: 80,  // Set the width of the marker
+                height: 80, // Set the height of the marker
+                child: Icon(
+                  Icons.pin_drop,
+                  color: Colors.red,
+                  size: 40, // Adjust the icon size
+                ),
+              ),
+            ],
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
