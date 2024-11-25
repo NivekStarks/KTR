@@ -28,24 +28,24 @@ class MyHomePage extends StatelessWidget {
       ),
       body: FlutterMap(
         options: MapOptions(
-          initialCenter: LatLng(51.5, -0.09), // Latitude, Longitude for the initial view
+          initialCenter: LatLng(48.8566, 2.3522), // Latitude, Longitude for the initial view
           initialZoom: 13.0, // Initial zoom level
         ),
         children: [
           TileLayer(
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // OpenStreetMap tile URL
-            subdomains: ['a', 'b', 'c'], // Optional subdomains for OpenStreetMap
+            subdomains: ['a', 'b', 'c'], 
           ),
           MarkerLayer(
             markers: [
               Marker(
-                point: LatLng(51.5, -0.09), // Marker coordinates
-                width: 80,  // Set the width of the marker
-                height: 80, // Set the height of the marker
+                point: LatLng(48.8566, 2.3522), // rayan timothée foutent rien depuis l'apm
+                width: 80,  
+                height: 80, 
                 child: Icon(
                   Icons.pin_drop,
                   color: Colors.red,
-                  size: 40, // Adjust the icon size
+                  size: 40,
                 ),
               ),
             ],
