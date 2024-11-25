@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        
+        {
+            "name": "Flutter (lib\\main.dart)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "dev\\eventdeaf",
+            "program": "lib\\main.dart",
+            "args": ["scan"],
+        }
+    ]
+}
