@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_map: ^3.0.0  # Assurez-vous que vous utilisez la dernière version
+  latlong2: ^0.8.0     # Nécessaire pour gérer les coordonnées géographiques
+
 
 
   # The following adds the Cupertino Icons font to your application.
