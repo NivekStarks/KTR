@@ -19,16 +19,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final MapController _mapController = MapController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Application EventDeaf',
-        style: TextStyle(fontSize: 15 ),
+        style: TextStyle(fontSize: 15),
         ),
       ),
       body: FlutterMap(
+        mapController: _mapController,
         options: MapOptions(
           initialCenter: LatLng(48.8566, 2.3522), // Paris
           initialZoom: 12.0, // Initial zoom level
@@ -61,7 +69,11 @@ class MyHomePage extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: () {
-              // Logic to zoom in (if you need programmatic control)
+              // Zoom in
+              _mapController.move(
+                _mapController.camera.center, 
+                _mapController.camera.zoom + 0.5
+              );
             },
             child: Icon(Icons.zoom_in),
             heroTag: 'zoomIn',
@@ -69,7 +81,11 @@ class MyHomePage extends StatelessWidget {
           SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
-              // Logic to zoom out (if you need programmatic control)
+              // Zoom out
+              _mapController.move(
+                _mapController.camera.center, 
+                _mapController.camera.zoom - 0.5
+              );
             },
             child: Icon(Icons.zoom_out),
             heroTag: 'zoomOut',
