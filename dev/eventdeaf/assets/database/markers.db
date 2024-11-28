@@ -1,0 +1,13 @@
+-- Créer la table 'markers'
+CREATE TABLE markers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  latitude REAL NOT NULL,
+  longitude REAL NOT NULL
+);
+
+-- Ajouter des marqueurs d'exemple
+INSERT INTO markers (latitude, longitude) VALUES (48.8584, 2.2945);  -- Tour Eiffel (Paris)
+INSERT INTO markers (latitude, longitude) VALUES (40.748817, -73.985428);  -- Empire State Building (New York)
+INSERT INTO markers (latitude, longitude) VALUES (51.5074, -0.1278);  -- Big Ben (Londres)
+INSERT INTO markers (latitude, longitude) VALUES (34.0522, -118.2437);  -- Hollywood Sign (Los Angeles)
+INSERT INTO markers (latitude, longitude) VALUES (35.6762, 139.6503);  -- Tokyo Tower (Tokyo)
