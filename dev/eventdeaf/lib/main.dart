@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'database_helper.dart';  // Importer votre fichier de base de données
@@ -32,56 +34,101 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _loadMarkers();  // Charger les marqueurs depuis la base de données
+    _loadMarkers();
   }
 
-  // Charger les marqueurs depuis la base de données
- Future<void> _loadMarkers() async {
-  try {
-    var dbHelper = DatabaseHelper.instance;
-    List<Map<String, dynamic>> markerRows = await dbHelper.getAllMarkers();
-
-    List<Marker> loadedMarkers = markerRows.map((row) => 
-      Marker(
-        point: LatLng(row['latitude'], row['longitude']),
-        width: 80,
-        height: 80,
-        child: Icon(
-          Icons.location_pin,
-          color: Colors.red,
-          size: 40,
-        ),
-      )
-    ).toList();
+  Future<void> _loadMarkers() async {
+    final String response = await rootBundle.loadString('assets/markers.json');
+    final List<dynamic> data = json.decode(response);
 
     setState(() {
-      _markers = loadedMarkers;
+      _markers = data.map((markerData) {
+        final lat = markerData['latitude'];
+        final lng = markerData['longitude'];
+        final name = markerData['name'];
+        final category = markerData['category'];
+        final address = markerData['address'];
+        final date = markerData['date'];
+
+        return Marker(
+          point: LatLng(lat, lng),
+          width: 80,
+          height: 80,
+          child: GestureDetector(
+            onTap: () => _showPopup(context, name, category, address, date),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.location_pin,
+                  color: Colors.red,
+                  size: 40,
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList();
     });
-  } catch (e) {
-    print("Error loading markers: $e");
   }
-}
+
+
+  void _showPopup(BuildContext context, String name, String category, String address, String date) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(name),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Catégorie: $category"),
+            Text("Adresse: $address"),
+            if (date.isNotEmpty) Text("Date: $date"),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Fermer'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Application EventDeaf', style: TextStyle(fontSize: 15)),
+        title: Text('Application EventDeaf',
+        style: TextStyle(fontSize: 15),
+        ),
       ),
       body: FlutterMap(
         mapController: _mapController,
         options: MapOptions(
           initialCenter: LatLng(48.8566, 2.3522), // Paris
-          initialZoom: 12.0, // Niveau de zoom initial
-          maxZoom: 18.0, // Niveau de zoom maximum
-          minZoom: 5.0, // Niveau de zoom minimum
+          initialZoom: 12.0, // Initial zoom level
+          maxZoom: 18.0, // Maximum zoom level (closer view)
+          minZoom: 5.0, // Minimum zoom level (farther view)
         ),
         children: [
           TileLayer(
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           ),
           MarkerLayer(
-            markers: _markers, // Affichage des marqueurs récupérés
+            markers: [
+              Marker(
+                point: LatLng(48.8566, 2.3522),
+                width: 80,
+                height: 80,
+                child: Icon(
+                  Icons.location_pin,
+                  color: Colors.red,
+                  size: 40,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -90,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              // Zoom avant
+              // Zoom in
               _mapController.move(
                 _mapController.camera.center,
                 _mapController.camera.zoom + 0.5,
@@ -102,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
-              // Zoom arrière
+              // Zoom out
               _mapController.move(
                 _mapController.camera.center,
                 _mapController.camera.zoom - 0.5,

@@ -63,9 +63,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # Pour ajouter des assets à votre application, ajoutez une section assets comme ceci :
   assets:
-    - assets/database/markers.db
+    - assets/markers.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
