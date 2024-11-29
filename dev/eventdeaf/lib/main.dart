@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'database_helper.dart';  // Importer votre fichier de base de données
 
 void main() {
   runApp(MyApp());
@@ -100,36 +99,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Application EventDeaf',
-        style: TextStyle(fontSize: 15),
+        title: Text(
+          'Application EventDeaf',
+          style: TextStyle(fontSize: 15),
         ),
       ),
       body: FlutterMap(
         mapController: _mapController,
         options: MapOptions(
           initialCenter: LatLng(48.8566, 2.3522), // Paris
-          initialZoom: 12.0, // Initial zoom level
-          maxZoom: 18.0, // Maximum zoom level (closer view)
-          minZoom: 5.0, // Minimum zoom level (farther view)
+          initialZoom: 5.0,
+          maxZoom: 18.0,
+          minZoom: 5.0,
         ),
         children: [
           TileLayer(
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            subdomains: ['a', 'b', 'c'],
           ),
-          MarkerLayer(
-            markers: [
-              Marker(
-                point: LatLng(48.8566, 2.3522),
-                width: 80,
-                height: 80,
-                child: Icon(
-                  Icons.location_pin,
-                  color: Colors.red,
-                  size: 40,
-                ),
-              ),
-            ],
-          ),
+          MarkerLayer(markers: _markers),
         ],
       ),
       floatingActionButton: Column(
@@ -137,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              // Zoom in
               _mapController.move(
                 _mapController.camera.center,
                 _mapController.camera.zoom + 0.5,
@@ -149,7 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
-              // Zoom out
               _mapController.move(
                 _mapController.camera.center,
                 _mapController.camera.zoom - 0.5,
