@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "881015386436",
+    "firebase_url": "https://test-kevin-cf66a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "test-kevin-cf66a",
+    "storage_bucket": "test-kevin-cf66a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881015386436:android:27caa798f61588a5692711",
+        "android_client_info": {
+          "package_name": "com.example.eventdeaf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM_KiaFFJXJbATsL3WobO4b0qjb47KauI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
