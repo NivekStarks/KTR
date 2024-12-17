@@ -35,9 +35,10 @@ dependencies:
   sqflite: ^2.0.0+4  # Pour SQLite
   path_provider: ^2.1.5  # Pour obtenir le chemin du répertoire de la base de données
   path: ^1.8.0  # Ajoutez cette ligne pour inclure le package path
-  firebase_core: ^2.10.0  # Firebase initialization
-  cloud_firestore: ^4.10.0 # Firestore
-  firebase_auth: 4.16.0 # Firestore
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.3
+  cloud_firestore: ^5.3.0 # Si tu utilises Firestore
+  google_maps_flutter: ^2.0.7
   
 
 

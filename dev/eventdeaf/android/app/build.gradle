@@ -1,9 +1,12 @@
 plugins {
+    
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services" // Plugin Google Services
 }
+
+apply plugin: "com.google.gms.google-services" // Apply plugin Google Services
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')

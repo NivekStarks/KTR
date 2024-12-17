@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home_page.dart';
-import 'map_with_markers.dart';
+import 'package:flutter/material.dart';
+import 'home_page.dart'; // Page principale après la connexion
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     try {
-      // Connexion avec l'email et le mot de passe
       final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
@@ -47,28 +45,30 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    String email;
-    String password;
     return Scaffold(
-      appBar: AppBar(title: Text('Connexion')),
+      appBar: AppBar(title: const Text("Se connecter")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: [
+          children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: 'Email'),
-              onChanged: (value) => email = value,
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Mot de passe'),
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: 'Mot de passe'),
               obscureText: true,
-              onChanged: (value) => password = value,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(onPressed: _login, child: Text('Se Connecter')),
+            const SizedBox(height: 20),
+            _isLoading
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                    onPressed: _login,
+                    child: const Text('Se connecter'),
+                  ),
           ],
         ),
       ),

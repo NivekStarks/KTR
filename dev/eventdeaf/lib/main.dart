@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart'; // Page principale avec carte et ajout de marqueurs
@@ -5,6 +6,10 @@ import 'login_page.dart'; // Page de connexion
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialisation de Firebase
+  await Firebase.initializeApp();
+  
   runApp(MyApp());
 }
 
@@ -28,16 +33,14 @@ class AuthGate extends StatelessWidget {
       future: FirebaseAuth.instance.authStateChanges().first, // Vérifie l'état d'authentification
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Afficher un indicateur de chargement pendant la vérification de l'état de connexion
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          // Afficher un message d'erreur si l'état de l'authentification échoue
           return const Center(child: Text('Erreur de connexion'));
         } else if (snapshot.hasData) {
-          // Si l'utilisateur est connecté, aller à la page d'accueil
+          // Si l'utilisateur est connecté, redirige vers la page d'accueil
           return const HomePage();
         } else {
-          // Si l'utilisateur n'est pas connecté, aller à la page de connexion
+          // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
           return const LoginPage();
         }
       },
