@@ -1,10 +1,12 @@
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -37,19 +39,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _loadMarkers() async {
-    final String response = await rootBundle.loadString('assets/markers.json');
-    final List<dynamic> data = json.decode(response);
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    List<Marker> markers = [];
 
-    setState(() {
-      _markers = data.map((markerData) {
-        final lat = markerData['latitude'];
-        final lng = markerData['longitude'];
-        final name = markerData['name'];
-        final category = markerData['category'];
-        final address = markerData['address'];
-        final date = markerData['date'];
+    // Récupérer les documents de la collection "markers"
+    QuerySnapshot snapshot = await firestore.collection('markers').get();
 
-        return Marker(
+    // Convertir chaque document en un Marker
+    for (var doc in snapshot.docs) {
+      var data = doc.data() as Map<String, dynamic>;
+      double lat = data['latitude'];
+      double lng = data['longitude'];
+      String name = data['name'];
+      String category = data['category'];
+      String address = data['address'];
+      String date = data['date'] ?? '';
+
+      // Ajouter un marqueur à la liste
+      markers.add(
+        Marker(
           point: LatLng(lat, lng),
           width: 80,
           height: 80,
@@ -65,12 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-        );
-      }).toList();
+        ),
+      );
+    }
+
+    setState(() {
+      _markers = markers;  // Mettre à jour la liste des marqueurs
     });
   }
 
-
+  // Afficher la popup avec les détails du marqueur
   void _showPopup(BuildContext context, String name, String category, String address, String date) {
     showDialog(
       context: context,
@@ -99,10 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Application EventDeaf',
-          style: TextStyle(fontSize: 15),
-        ),
+        title: Text('Application EventDeaf', style: TextStyle(fontSize: 15)),
       ),
       body: FlutterMap(
         mapController: _mapController,
@@ -117,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             subdomains: ['a', 'b', 'c'],
           ),
-          MarkerLayer(markers: _markers),
+          MarkerLayer(markers: _markers),  // Affichage des marqueurs sur la carte
         ],
       ),
       floatingActionButton: Column(

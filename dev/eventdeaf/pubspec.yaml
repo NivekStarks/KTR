@@ -35,6 +35,8 @@ dependencies:
   sqflite: ^2.0.0+4  # Pour SQLite
   path_provider: ^2.1.5  # Pour obtenir le chemin du répertoire de la base de données
   path: ^1.8.0  # Ajoutez cette ligne pour inclure le package path
+  firebase_core: ^2.10.0  # Firebase initialization
+  cloud_firestore: ^4.10.0
 
 
   # The following adds the Cupertino Icons font to your application.
