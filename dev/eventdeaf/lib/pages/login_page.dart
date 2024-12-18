@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';  // Import Firebase Auth
 import 'package:flutter/material.dart';
 import 'post_login_screen.dart';
 
@@ -6,12 +7,46 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login(BuildContext context) {
+  void _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => PostLoginScreen()),
-      );
+      try {
+        // Authenticate user with Firebase Authentication
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+          email: _usernameController.text,
+          password: _passwordController.text,
+        );
+
+        // If the login is successful, navigate to the PostLoginScreen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PostLoginScreen()),
+        );
+      } on FirebaseAuthException catch (e) {
+        // Handle errors during login
+        String errorMessage = "An error occurred. Please try again.";
+
+        if (e.code == 'user-not-found') {
+          errorMessage = 'No user found for that email.';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Wrong password provided.';
+        }
+
+        // Show error message
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login Error'),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 
@@ -29,9 +64,9 @@ class LoginPage extends StatelessWidget {
             children: [
               TextFormField(
                 controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Nom d\'utilisateur'),
+                decoration: InputDecoration(labelText: 'Email'),
                 validator: (value) =>
-                    value!.isEmpty ? 'Entrez votre nom d\'utilisateur' : null,
+                    value!.isEmpty ? 'Entrez votre email' : null,
               ),
               TextFormField(
                 controller: _passwordController,

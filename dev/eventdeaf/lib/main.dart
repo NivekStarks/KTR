@@ -8,7 +8,7 @@ import 'pages/login_page.dart'; // Importer LoginPage
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(); // Firebase initialization
   runApp(MyApp());
 }
 
@@ -81,15 +81,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // Appliquer le filtre sur la catégorie et les dates
       if ((_selectedCategory == null || _selectedCategory == category) &&
-          (_selectedStartDate == null || (date != null && date.isAfter(_selectedStartDate!))) &&
-          (_selectedEndDate == null || (date != null && date.isBefore(_selectedEndDate!)))) {
+          (_selectedStartDate == null ||
+              (date != null && date.isAfter(_selectedStartDate!))) &&
+          (_selectedEndDate == null ||
+              (date != null && date.isBefore(_selectedEndDate!)))) {
         markers.add(
           Marker(
             point: LatLng(lat, lng),
             width: 80,
             height: 80,
             child: GestureDetector(
-              onTap: () => _showPopup(context, name, category, address, dateStr),
+              onTap: () =>
+                  _showPopup(context, name, category, address, dateStr),
               child: Icon(
                 Icons.location_pin,
                 color: Colors.red,
@@ -107,7 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // Afficher la popup avec les détails du marqueur
-  void _showPopup(BuildContext context, String name, String category, String address, String date) {
+  void _showPopup(BuildContext context, String name, String category,
+      String address, String date) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -172,7 +176,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 }
               },
-              child: Text(_selectedStartDate == null ? 'Choisir une date de début' : 'Début: ${_dateFormat.format(_selectedStartDate!)}'),
+              child: Text(_selectedStartDate == null
+                  ? 'Choisir une date de début'
+                  : 'Début: ${_dateFormat.format(_selectedStartDate!)}'),
             ),
             // Sélectionner la date de fin
             TextButton(
@@ -189,7 +195,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 }
               },
-              child: Text(_selectedEndDate == null ? 'Choisir une date de fin' : 'Fin: ${_dateFormat.format(_selectedEndDate!)}'),
+              child: Text(_selectedEndDate == null
+                  ? 'Choisir une date de fin'
+                  : 'Fin: ${_dateFormat.format(_selectedEndDate!)}'),
             ),
             SizedBox(height: 10),
             // Ajouter un bouton pour réinitialiser les filtres
@@ -251,7 +259,8 @@ class _MyHomePageState extends State<MyHomePage> {
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             subdomains: ['a', 'b', 'c'],
           ),
-          MarkerLayer(markers: _markers), // Affichage des marqueurs sur la carte
+          MarkerLayer(
+              markers: _markers), // Affichage des marqueurs sur la carte
         ],
       ),
       floatingActionButton: Column(
