@@ -24,19 +24,19 @@ class LoginPage extends StatelessWidget {
         );
       } on FirebaseAuthException catch (e) {
         // Handle errors during login
-        String errorMessage = "An error occurred. Please try again.";
+        String errorMessage = "Une erreur s'est produite. Veuillez réessayer.";
 
         if (e.code == 'user-not-found') {
-          errorMessage = 'No user found for that email.';
+          errorMessage = 'Aucun utilisateur trouvé pour cet e-mail.';
         } else if (e.code == 'wrong-password') {
-          errorMessage = 'Wrong password provided.';
+          errorMessage = 'Mauvais mot de passe fourni.';
         }
 
         // Show error message
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Login Error'),
+            title: Text('Erreur de connexion'),
             content: Text(errorMessage),
             actions: [
               TextButton(
