@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart'; // Page principale après la connexion
+import 'package:firebase_auth/firebase_auth.dart';
+import 'add_marker_screen.dart'; // Pour accéder à AddMarkerScreen
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,37 +10,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;  // Pour afficher un indicateur de chargement
+  bool _isLoading = false;
 
-  // Fonction de connexion
   Future<void> _login() async {
     setState(() {
-      _isLoading = true;  // Affichage de l'indicateur de chargement
+      _isLoading = true;
     });
 
     try {
-      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
 
-      // Si la connexion réussit, rediriger vers la page d'accueil
-      if (userCredential.user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-      }
+      // Redirection vers AddMarkerScreen après une connexion réussie
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => AddMarkerScreen()),
+      );
     } on FirebaseAuthException catch (e) {
-      // En cas d'erreur de connexion
       setState(() {
-        _isLoading = false;  // Masquer l'indicateur de chargement
+        _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Erreur : ${e.message}")),
+        SnackBar(content: Text('Erreur : ${e.message}')),
       );
     }
   }
@@ -48,11 +43,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Se connecter")),
+      appBar: AppBar(title: const Text('Se connecter')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: <Widget>[
+          children: [
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(labelText: 'Email'),
