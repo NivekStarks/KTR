@@ -13,6 +13,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -269,8 +273,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // Bouton de filtre
           FloatingActionButton(
             onPressed: _showFilterDialog,
-            child: Icon(Icons.filter_alt),
             heroTag: 'filterButton',
+            child: Icon(Icons.filter_alt),
           ),
           SizedBox(height: 10),
           // Bouton de zoom +
@@ -281,8 +285,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 _mapController.camera.zoom + 0.5,
               );
             },
-            child: Icon(Icons.zoom_in),
             heroTag: 'zoomIn',
+            child: Icon(Icons.zoom_in),
           ),
           SizedBox(height: 10),
           // Bouton de zoom -
@@ -293,8 +297,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 _mapController.camera.zoom - 0.5,
               );
             },
-            child: Icon(Icons.zoom_out),
             heroTag: 'zoomOut',
+            child: Icon(Icons.zoom_out),
           ),
         ],
       ),

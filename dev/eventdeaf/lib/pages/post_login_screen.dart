@@ -3,6 +3,8 @@ import 'add_marker_screen.dart';
 import 'delete_marker_screen.dart';
 
 class PostLoginScreen extends StatelessWidget {
+  const PostLoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

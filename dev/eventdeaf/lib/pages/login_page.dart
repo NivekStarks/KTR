@@ -7,6 +7,8 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  LoginPage({super.key});
+
   void _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       try {

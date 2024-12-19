@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart'; // Import pour revenir à la carte dans main.dart
 
 class AddMarkerScreen extends StatefulWidget {
+  const AddMarkerScreen({super.key});
+
   @override
   _AddMarkerScreenState createState() => _AddMarkerScreenState();
 }

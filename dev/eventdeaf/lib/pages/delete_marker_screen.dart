@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 
 class DeleteMarkerScreen extends StatelessWidget {
+  const DeleteMarkerScreen({super.key});
+
   Future<List<Map<String, dynamic>>> _fetchMarkers() async {
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('markers').get();
